@@ -382,31 +382,35 @@ const DataManagement = <T extends { id: string }>({ title, data, columns, api, o
     };
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
             <div className="lg:col-span-2 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-                <table className="min-w-full divide-y divide-gray-200">
+                <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                         <tr>
-                            {columns.map(col => <th key={String(col)} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{String(col).replace(/([A-Z])/g, ' $1').toUpperCase()}</th>)}
-                            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                            {columns.map(col => <th key={String(col)} className="px-2 sm:px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{String(col).replace(/([A-Z])/g, ' $1').toUpperCase()}</th>)}
+                            <th className="px-2 sm:px-4 lg:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                         {data.map(item => (
                             <tr key={item.id}>
-                                {columns.map(col => <td key={String(col)} className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{String(item[col])}</td>)}
-                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end items-center gap-4">
-                                    {onGenerateQR && <button onClick={() => onGenerateQR(item)} className="text-gray-600 hover:text-black transition-transform duration-200 hover:scale-125" title="Generar QR"><QRIcon className="w-5 h-5"/></button>}
-                                    <button onClick={() => handleEditClick(item)} className="text-blue-600 hover:text-blue-800 transition-transform duration-200 hover:scale-125" title="Editar"><PencilIcon className="w-5 h-5"/></button>
-                                    <button onClick={() => handleDelete(item.id)} className="text-red-600 hover:text-red-800 transition-transform duration-200 hover:scale-125" title="Eliminar"><TrashIcon className="w-5 h-5"/></button>
+                                {columns.map(col => <td key={String(col)} className="px-2 sm:px-4 lg:px-6 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-700">{String(item[col])}</td>)}
+                                <td className="px-2 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <div className="flex justify-end items-center gap-1 sm:gap-2 md:gap-4">
+                                        {onGenerateQR && <button onClick={() => onGenerateQR(item)} className="text-gray-600 hover:text-black transition-transform duration-200 hover:scale-125 p-1" title="Generar QR"><QRIcon className="w-4 h-4 sm:w-5 sm:h-5"/></button>}
+                                        <button onClick={() => handleEditClick(item)} className="text-blue-600 hover:text-blue-800 transition-transform duration-200 hover:scale-125 p-1" title="Editar"><PencilIcon className="w-4 h-4 sm:w-5 sm:h-5"/></button>
+                                        <button onClick={() => handleDelete(item.id)} className="text-red-600 hover:text-red-800 transition-transform duration-200 hover:scale-125 p-1" title="Eliminar"><TrashIcon className="w-4 h-4 sm:w-5 sm:h-5"/></button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                </div>
             </div>
             <div className="lg:col-span-1">
-                <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-lg border border-gray-200 space-y-4">
+                <form onSubmit={handleSubmit} className="bg-white p-4 sm:p-6 rounded-xl shadow-lg border border-gray-200 space-y-4">
                     <h3 className="text-lg font-bold">{isEditing ? `Editar ${title.slice(0, -1)}` : `Añadir Nuevo ${title.slice(0, -1)}`}</h3>
                     {formFields.map(field => (
                         <div key={field}>
